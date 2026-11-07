@@ -4,10 +4,10 @@
 
 ## Run it
 
-You need [uv](https://docs.astral.sh/uv/). From the repo root:
+You need [uv](https://docs.astral.sh/uv/) (install it with `pip install uv` if you don't have it). From the repo root:
 
 ```bash
-uv run aisociety-hackaton-2026
+uv run streamlit run src/aisociety_hackaton_2026/__init__.py
 ```
 
 The app opens at http://localhost:8501. Pick a flat in the sidebar, then use the tabs:
@@ -22,7 +22,7 @@ Behind a corporate proxy, add `--system-certs` after `uv run`.
 
 ```
 src/aisociety_hackaton_2026/
-├── app.py           entry point: sidebar, build the flat's data, three tabs
+├── __init__.py      entry point (main): sidebar, build the flat's data, three tabs
 ├── coach.py         weekly coach message (Claude writes it if `anthropic` and ANTHROPIC_API_KEY are set up)
 ├── data/
 │   ├── cleaning.py  read datasets/*.csv, fix the data problems, join prices and context
