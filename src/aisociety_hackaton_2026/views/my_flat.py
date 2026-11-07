@@ -53,14 +53,12 @@ def _key_numbers(ctx: FlatContext) -> None:
               delta=f"{this_week.mine - week_before.mine:+.1f} vs the week before", delta_color="inverse",
               help="Average per student per day over the last 7 days.")
     c2.metric("Similar flats", f"{this_week.peers:.1f} kWh/day", border=True,
-              delta=f"you use {this_week.mine / this_week.peers:.1f}×", delta_color="off", delta_arrow="off",
+              delta=f"you use {this_week.mine / this_week.peers:.1f}×", delta_color="inverse",
               help="Median of the other flats, per student per day, same week.")
     c3.metric("Cost this week", f"{week_sek:,.0f} SEK", border=True,
-              delta=f"{week_kg:.1f} kg CO2e", delta_color="off", delta_arrow="off",
+              delta_color="off", delta_arrow="off",
               help=f"Whole flat, {ctx.cost_note}, excluding VAT.")
     c4.metric("You could save a year", f"{save_sek:,.0f} SEK", border=True,
-              delta=f"{save_kwh:,.0f} kWh off the bill" if save_kwh else "same kWh, cheaper hours",
-              delta_color="off", delta_arrow="off",
               help=f"Central estimate for the whole flat, {ctx.cost_note}. Each action shows its basis and low case.")
 
 
@@ -89,7 +87,7 @@ def _action_card(ctx: FlatContext, action) -> None:
     kg_text = f"{action.kg_year:,.1f} kg CO2e" if counts_co2 else "CO2e not counted"
 
     with st.container(border=True):
-        st.markdown(f"#### {action.icon} {action.title}")
+        st.markdown(f"#### {action.title}")
         st.write(action.saw)
         st.markdown(f"**What to do:** {action.todo}")
         st.markdown(f"**Saves a year:** :blue-badge[{kwh_text}] :orange-badge[{action.sek_year:,.0f} SEK] "
@@ -98,25 +96,3 @@ def _action_card(ctx: FlatContext, action) -> None:
                    f"Low case: {action.kwh_year_low:,.0f} kWh, {action.sek_year_low:,.0f} SEK.")
         with st.expander("Show me the evidence"):
             charts.show_evidence(ctx, action)
-
-
-# ---------------------------------------------------------------------- 4. coach message
-def _coach_message(ctx: FlatContext) -> None:
-    st.subheader("💬 This week's message")
-    key = f"coach_message_{ctx.flat_id}"
-    message = st.session_state.get(key) or coach.template_message(ctx)
-    with st.container(border=True):
-        st.markdown(message)
-
-    if not coach.ai_available():
-        st.caption("Add the `anthropic` package and an API key to let Claude write this message.")
-        return
-    if st.button("✨ Write it with the AI coach", help="Asks Claude to write this week's message from your numbers."):
-        with st.spinner("Writing your message..."):
-            try:
-                st.session_state[key] = coach.ai_message(ctx)
-                st.rerun()
-            except coach.CoachUnavailable as e:
-                st.warning(f"{e} Showing the built-in message instead.")
-    if key in st.session_state:
-        st.caption("Written by Claude from the numbers on this page.")

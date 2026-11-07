@@ -25,8 +25,6 @@ def render(ctx: FlatContext) -> None:
     _headline(ctx)
     _baseline(ctx)
     _all_actions(ctx)
-    _assumptions(ctx)
-
 
 # ---------------------------------------------------------------------- 1. headline
 def _headline(ctx: FlatContext) -> None:
@@ -84,18 +82,3 @@ def _all_actions(ctx: FlatContext) -> None:
         "Low_case_kWh": st.column_config.NumberColumn("Low case kWh", format="%d"),
         "Basis": st.column_config.TextColumn("How we scaled it", width="large"),
     })
-
-
-# ---------------------------------------------------------------------- 4. assumptions and sources
-def _assumptions(ctx: FlatContext) -> None:
-    st.subheader("Assumptions and sources")
-    st.markdown(f"""
-- **Data:** the organisers' synthetic student-flat dataset: 8 flats, 25 students, hourly readings for 7 circuits per flat, 1-28 October 2026.
-- **Prices and carbon:** the dataset's synthetic SE3 hourly spot price and operational carbon factor. A live version would use [elprisetjustnu.se](https://www.elprisetjustnu.se) for spot prices and [Electricity Maps](https://www.electricitymaps.com) for carbon intensity.
-- **Money:** spot price only, excluding VAT, unless you add energy tax, grid fee and VAT in the sidebar (sources: Skatteverket for energy tax, your grid operator's tariff). Fixed monthly fees never go down.
-- **Expensive hours:** hours whose average price is at least 1.5× the typical hour: {ctx.analysis.prices['peak_label']}.
-- **Scaling to a year:** heaters over the heating season only (Oct-Apr, 212 days) at October's rate, which is conservative because winter is colder; always-on waste over 365 days; a fault for 6 months before someone would notice; moved runs over 365 days.
-- **Low case:** half the change, or only the hours nobody was home, to allow for partial uptake and people slipping back into old habits.
-- **Not counted as energy saved:** the radiator case (the heat comes from district heating instead) and moved runs (same kWh, different hour).
-- **Caveat:** four autumn weeks of synthetic data are fine for a demo but are not evidence of real-world savings.
-""")
