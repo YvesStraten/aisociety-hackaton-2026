@@ -73,11 +73,10 @@ def _all_actions(ctx: FlatContext) -> None:
         Net=f.energy_saving,
         Low_case_kWh=f.kwh_year_low.round(0),
         Basis=f.basis,
-    )[["Flat", "Action", "kWh_year", "SEK_year", "kg_year", "Net", "Low_case_kWh"]]
+    )[["Flat", "Action", "kWh_year", "SEK_year", "kg_year", "Low_case_kWh"]]
     st.dataframe(table, hide_index=True, width="stretch", column_config={
         "kWh_year": st.column_config.NumberColumn("kWh / year", format="%d"),
         "SEK_year": st.column_config.NumberColumn("SEK / year", format="%d"),
         "kg_year": st.column_config.NumberColumn("kg CO2e / year", format="%.1f"),
-        "Net": st.column_config.CheckboxColumn("Net energy?"),
         "Low_case_kWh": st.column_config.NumberColumn("Low case kWh", format="%d"),
     })
