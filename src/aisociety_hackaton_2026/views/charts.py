@@ -54,7 +54,7 @@ def by_appliance(ctx: FlatContext) -> alt.Chart:
         tooltip=["label", "appliance_id", alt.Tooltip("kwh:Q", format=".1f", title="kWh"),
                  alt.Tooltip("share:Q", format=".0%", title="Share")])
     shares = bars.mark_text(align="left", dx=4, color=MUTED).encode(text=alt.Text("share:Q", format=".0%"))
-    return (bars + shares).properties(height=240)
+    return (bars + shares).properties(height=400)
 
 
 def week_by_week(ctx: FlatContext) -> alt.Chart:
