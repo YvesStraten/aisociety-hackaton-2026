@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-aisociety-hackaton-2026 = "aisociety_hackaton_2026:main"
+main = "aisociety_hackaton_2026:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]
