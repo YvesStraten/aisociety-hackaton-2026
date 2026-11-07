@@ -40,7 +40,11 @@ def peak_band(ctx: FlatContext) -> alt.Chart:
 # ------------------------------------------------------------------ usage charts
 def by_appliance(ctx: FlatContext) -> alt.Chart:
     """Horizontal bars: kWh per appliance over the 4 weeks, biggest first."""
-    use = ctx.usage
+    # Appliances with the same name (e.g. two "Dishwasher or washing machine" circuits)
+    # become one bar, so its percentage label sits at the end of the whole bar.
+    use = (ctx.usage.groupby(["label", "kind"], as_index=False)
+           .agg(kwh=("kwh", "sum"), share=("share", "sum"),
+                appliance_id=("appliance_id", lambda ids: ", ".join(sorted(ids)))))
     order = use.sort_values("kwh", ascending=False).label.tolist()
     bars = alt.Chart(use).mark_bar(cornerRadiusTopRight=4, cornerRadiusBottomRight=4, height={"band": 0.7}).encode(
         y=alt.Y("label:N", sort=order, title=None, axis=alt.Axis(labelLimit=220)),
