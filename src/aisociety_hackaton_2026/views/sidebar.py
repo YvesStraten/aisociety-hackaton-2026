@@ -16,7 +16,7 @@ class SidebarChoice:
 def render(flats: pd.DataFrame) -> SidebarChoice:
     with st.sidebar:
         # ---------------------------------------------------------- 1. title
-        st.title("⚡ Flat Energy Coach")
+        st.title("Energy, here's the thing...")
         st.caption("Finds the energy waste in your flat and tells you what to do about it.")
 
         # ---------------------------------------------------------- 2. flat picker
@@ -35,10 +35,5 @@ def render(flats: pd.DataFrame) -> SidebarChoice:
                   "Look up today's values (Skatteverket for energy tax, your grid operator for the fee) and enter "
                   "the total here to see full-bill savings. Fixed monthly fees never go down."),
         )
-
-        # ---------------------------------------------------------- 4. data note
-        st.divider()
-        st.caption("Synthetic demo data from the hackathon organisers: 8 student flats in SE3, "
-                   "1-28 October 2026. Not real people, not real meters.")
 
     return SidebarChoice(flat_id=flat_id, extra_sek_per_kwh=float(extra))

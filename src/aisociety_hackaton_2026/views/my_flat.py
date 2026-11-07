@@ -30,8 +30,6 @@ def render(ctx: FlatContext) -> None:
     left, right = st.columns([3, 2], gap="large")
     with left:
         _top_actions(ctx)
-    with right:
-        _coach_message(ctx)
 
 
 # ---------------------------------------------------------------------- 1. header
