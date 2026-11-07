@@ -43,8 +43,6 @@ def _headline(ctx: FlatContext) -> None:
     k2.metric("Money saved", f"{central['sek']:,.0f} SEK", border=True,
               help="Includes moving loads to cheaper hours and the radiator case (it comes off the electricity bill).")
     k3.metric("CO2e avoided", f"{central['kg']:,.1f} kg", border=True)
-    st.caption(f"Low case: {low['net_kwh']:,.0f} kWh · {low['sek']:,.0f} SEK · {low['kg']:,.1f} kg CO2e "
-               "per student per year.")
 
 
 # ---------------------------------------------------------------------- 2. baseline
@@ -52,7 +50,7 @@ def _baseline(ctx: FlatContext) -> None:
     b = ctx.analysis.baseline
     students = b.residents.sum()
     kwh = b.kwh.sum() / students
-    st.info(f"Baseline: the average student used {kwh:.0f} kWh in these 4 weeks "
+    st.info(f"Baseline: the average student used {kwh:.0f} kWh in 4 weeks "
             f"({kwh / ctx.dataset.days:.1f} kWh a day), costing {b.sek.sum() / students:.0f} SEK at spot price "
             f"and {b.kg.sum() / students:.1f} kg CO2e.")
 
