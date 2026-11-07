@@ -1,2 +1,12 @@
+from pathlib import Path
+
+
 def main() -> None:
-    print("Hello from aisociety-hackaton-2026!")
+    """Start the Streamlit app: `uv run aisociety-hackaton-2026`."""
+    import sys
+
+    from streamlit.web import cli
+
+    app = Path(__file__).with_name("app.py")
+    sys.argv = ["streamlit", "run", str(app), *sys.argv[1:]]
+    sys.exit(cli.main())
