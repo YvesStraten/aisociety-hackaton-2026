@@ -63,12 +63,12 @@ def week_by_week(ctx: FlatContext) -> alt.Chart:
     w = ctx.weekly.melt(id_vars=["week", "label"], value_vars=["mine", "peers"], var_name="who", value_name="kwh")
     w["who"] = w.who.map({"mine": mine, "peers": peers})
     return alt.Chart(w).mark_line(strokeWidth=2, point=alt.OverlayMarkDef(size=60)).encode(
-        x=alt.X("label:N", sort=None, title=None),
+        x=alt.X("label:N", sort=None, title="Week range"),
         y=alt.Y("kwh:Q", title="kWh per student per day", scale=alt.Scale(zero=True)),
         color=alt.Color("who:N", title=None, scale=alt.Scale(domain=[mine, peers], range=[BLUE, MUTED]),
                         legend=alt.Legend(orient="top")),
         tooltip=["who", "label", alt.Tooltip("kwh:Q", format=".2f", title="kWh/student/day")],
-    ).properties(height=240)
+    ).properties(height=400)
 
 
 def average_day(ctx: FlatContext) -> alt.Chart:

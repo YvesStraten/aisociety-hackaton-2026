@@ -17,7 +17,7 @@ import pandas as pd
 from .analysis import Analysis
 from .cleaning import START, Dataset
 
-WEEK_LABELS = ["1-7 Oct", "8-14 Oct", "15-21 Oct", "22-28 Oct"]
+WEEK_LABELS = list(map(lambda num: f"{num} Week", range(1, 5)))
 
 
 @dataclass(frozen=True)
